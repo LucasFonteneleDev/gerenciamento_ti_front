@@ -26,6 +26,7 @@ const colunas = [
                 setDadosBase={setEquipamentos}
                 colunas={colunas}
                 titulo_cadastro={"Cadastro de Equipamento"}
+                nomeController={"/Equipamento"}
                 />
     </div>
   )

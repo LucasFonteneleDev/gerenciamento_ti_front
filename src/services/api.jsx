@@ -3,12 +3,49 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "http://localhost:5252/api",
+      baseURL: "https://localhost:7225/api",
       // baseURL: "https://jsonplaceholder.typicode.com",
       headers: {
         "Content-Type": "application/json",
       },
     });
+
+    // Adiciona o JWT automaticamente
+    this.api.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        return config;
+      },
+      (error) => Promise.reject(error)
+    );
+
+    // Trata respostas de erro
+    this.api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const isLoginRequest =
+          error.config?.url?.includes("/Login/login");
+
+        if (
+          error.response?.status === 401 &&
+          !isLoginRequest
+        ) {
+          localStorage.removeItem("token");
+          window.location.href = "/gerenciamento_ti_front/login";
+        }
+        else if (isLoginRequest) {
+          alert("Login inválido");
+        }
+
+        return Promise.reject(error);
+      }
+    );
+  
   }
 
   get(url, config = {}) {

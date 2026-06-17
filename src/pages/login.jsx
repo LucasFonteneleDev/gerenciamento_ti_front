@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Api from "../services/api";
 
 export default function Login({ onLogin }) {
   const [usuario, setUsuario] = useState("");
@@ -9,11 +10,28 @@ export default function Login({ onLogin }) {
 
     // login fake (exemplo)
     if (usuario && senha) {
-      onLogin({ usuario });
+      // onLogin({ usuario });
     } else {
       alert("Preencha usuário e senha");
     }
-  };
+
+    try{
+      Api.post("/Login/login", { usuario, senha }).then((data) => {
+          if (data.accessToken) {
+            localStorage.setItem("token", data.accessToken);
+            onLogin(data.accessToken);
+          }
+          else{
+            alert("Usuário ou senha inválidos");
+          }   
+        });
+        
+      } 
+      catch (error) {
+        console.log(error.response);
+        console.log(error.response?.data);
+      }
+  }
 
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
@@ -41,7 +59,7 @@ export default function Login({ onLogin }) {
             />
           </div>
 
-          <button type="submit" className="btn w-100 text-light" 
+          <button onClick={handleSubmit} className="btn w-100 text-light" 
                     style={{ backgroundColor: "#00f9aa"}}>
             <strong>Entrar</strong>
           </button>

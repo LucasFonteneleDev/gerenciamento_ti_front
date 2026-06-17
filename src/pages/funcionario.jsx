@@ -26,6 +26,7 @@ export default function Funcionario() {
                 setDadosBase={setFuncionarios}
                 colunas={colunas}
                 titulo_cadastro={"Cadastro de Funcionário"}
+                nomeController={"/Funcionario"}
                 />
 
     </div>

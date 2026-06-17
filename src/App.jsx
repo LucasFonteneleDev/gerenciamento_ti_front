@@ -11,7 +11,9 @@ import Equipamentos from "./pages/equipamentos";
 import TipoEquipamento from "./pages/tipoEquipamento";
 
 function App() {
-  const [usuarioLogado, setUsuarioLogado] = useState(true);
+  const [usuarioLogado, setUsuarioLogado] = useState(
+    !!localStorage.getItem("token")
+  );
 
   return (
     <HashRouter>

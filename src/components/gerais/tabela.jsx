@@ -1,20 +1,34 @@
+import Api from '../../services/api';
 import ModalCadastro from './modalCadastro'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Tabela(
-    {   dadosBase,
-        setDadosBase,
+    {   
         colunas,
-        titulo_cadastro
+        titulo_cadastro,
+        nomeController
     }) {
+
     const [showModal, setShowModal] = useState(false);
     const [objSelecionado, setObjSelecionado] = useState(null);
+    const [dadosBase, setDadosBase] = useState([]);
+
+    useEffect(() => {
+        carregarListagem();
+    }, []);
 
     function editar(id){
         setObjSelecionado(dadosBase.find(e => e.id === id));
         setShowModal(true);
     }
 
+    function carregarListagem(){//aparentemente está sendo chamada duas vezes
+        Api.get(nomeController + "/listagem").then(data => {
+            setDadosBase(data);
+        });
+    }
+
+    //ABRE O MODAL CONFIGURADO PARA CADASTRAR
     function cadastrar(){
 
     //isso é uma solução temporária até que eu termine a implementação da API no front
@@ -28,17 +42,23 @@ export default function Tabela(
 
     setObjSelecionado(novoObjeto);
     setShowModal(true);
-}
+    }
 
     const handleSave = (objEditado) => {
-            setDadosBase (prev =>
-            prev.map(filtrado =>
-                filtrado.id === objEditado.id ? objEditado : filtrado
-            )
-        );
+        if(objEditado.id == null){
+            Api.post(nomeController, objEditado).then(data => {
+                carregarListagem();
+            });
+        }
+        else{
+            Api.put(`${nomeController}/${objEditado.id}`, objEditado).then(data => {
+                carregarListagem();
+            });
+        }
 
         setShowModal(false);
         setObjSelecionado(null);
+        carregarListagem();
     };
 
     function desativar(id){

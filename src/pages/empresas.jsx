@@ -24,6 +24,7 @@ export default function Empresas() {
           setDadosBase={setEmpresas}
           colunas={colunas}
           titulo_cadastro={"Cadastro de Empresa"}
+          nomeController={"/Empresa"}
           />
       
     </div>

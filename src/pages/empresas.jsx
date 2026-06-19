@@ -6,8 +6,8 @@ export default function Empresas() {
   const colunas = [
     { key: 'nome', label: 'Loja' },
     { key: 'cnpj', label: 'CNPJ' },
-    { key: 'responsavel', label: 'Responsável', tipo: tipoInput.SELECAO},
-    { key: 'contato', label: 'Contato' }
+    { key: 'responsavel', label: 'Responsável', tipo: tipoInput.SELECAO, displayPath: "funcionario.nome", tituloPesquisa: "Funcionário Responsável"},
+    { key: 'contato', label: 'Contato'}
   ];
 
   return (

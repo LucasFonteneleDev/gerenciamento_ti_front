@@ -18,11 +18,13 @@ export default function Tabela(
     }, []);
 
     function editar(id){
-        setObjSelecionado(dadosBase.find(e => e.id === id));
+        Api.get(nomeController +"/"+ id)
+            .then(data=> setObjSelecionado(data));
+
         setShowModal(true);
     }
 
-    function carregarListagem(){//aparentemente está sendo chamada duas vezes
+    function carregarListagem(){//TODO: aparentemente está sendo chamada duas vezes
         Api.get(nomeController + "/listagem").then(data => {
             setDadosBase(data);
         });
@@ -44,6 +46,7 @@ export default function Tabela(
     setShowModal(true);
     }
 
+    //TODO: no momento de salvar também é necessário adequar a forma como a API aceita os dados
     const handleSave = (objEditado) => {
         if(objEditado.id == null){
             Api.post(nomeController, objEditado).then(data => {

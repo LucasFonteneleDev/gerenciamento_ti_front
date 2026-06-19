@@ -2,18 +2,7 @@ import React from 'react'
 import tipoInput from '/src/enum/tipoInput';
 import Modal from './modal.jsx';
 
-export default function InputVariavel({chave, label, handleChange, valor, tipo}) {
-
-    function handleChangeSelecao(chave, targetValor) {
-
-    }
-
-    // function valueSelecao(valor) {
-    //     //TODO: escolher apenas valor do nome para mostrar, mas salvar id do objs escolhido
-    //     return (
-    //         "a"
-    //     );
-    // }
+export default function InputVariavel({chave, label, handleChange, valor, tipo, onClick}) {
 
     switch (tipo) {
         case tipoInput.SELECAO:
@@ -21,12 +10,21 @@ export default function InputVariavel({chave, label, handleChange, valor, tipo})
                 <div className="m-2">
                     <label className="form-label">{label}</label>
 
-                    <input
-                    className="form-control"
-                    type="text"
-                    value={valor}
-                    onChange={e => handleChangeSelecao(chave, e.target.value)}
-                    />
+                    <div className="input-group">
+                        <input
+                            className="form-control"
+                            type="text"
+                            value={valor ?? ""}
+                            readOnly
+                        />
+
+                        <button
+                            className="btn btn-primary"
+                            onClick={onClick}
+                        >
+                            Pesquisar
+                        </button>
+                    </div>
                 </div>
             );
         case tipoInput.BOOLEANO:
@@ -51,8 +49,6 @@ export default function InputVariavel({chave, label, handleChange, valor, tipo})
             );
         case tipoInput.TEXTO:
         default:
-            console.log(tipo);
-            console.log(tipoInput.BOOLEANO);
             return (
                 <div className="m-2">
                     <label className="form-label">{label}</label>

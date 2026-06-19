@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import Tabela from '../components/gerais/tabela';
+import tipoInput from "/src/enum/tipoInput.jsx";
 
 export default function Usuarios() {
-
-  const [Usuarios, setUsuarios] = useState([
-    {id: 0, nome: "Lucas", id_funcionario: 0, ativo: true, senha: "123"},
-    {id: 1, nome: "Julia", id_funcionario: 1, ativo: false, senha: "123"}
-  ]);
-
   const colunas = [
     { key: 'nome', label: 'Nome' },
     { key: 'id_funcionario', label: 'Funcionario' },
-    { key: 'ativo', label: 'Ativo' }
+    { key: 'id_funcionario', label: 'Funcionario' },
+    { key: 'ativo', label: 'Ativo', tipo: tipoInput.BOOLEANO}
   ];
 
   return (
@@ -21,10 +17,9 @@ export default function Usuarios() {
       </p>
 
       <Tabela 
-        dadosBase={Usuarios}
-        setDadosBase={setUsuarios}
         colunas={colunas}
         titulo_cadastro={"Cadastro de Usuário"}
+        nomeController={"/Usuario"}
         />
     </div>
   )

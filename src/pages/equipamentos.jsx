@@ -3,11 +3,6 @@ import Tabela from '../components/gerais/tabela';
 
 export default function Equipamentos() {
 
-const [Equipamentos, setEquipamentos] = useState([
-        {id:0, tipo: "notebook", numero_serie: "123@123", loja: "loja", responsavel: "responsavel"},
-        {id:1, tipo: "celular", numero_serie: "123@123", loja: "loja", responsavel: "responsavel"}
-    ]);
-
 const colunas = [
     {key: "tipo", label: "Tipo"},
     {key: "numero_serie", label: "N° de Série"},
@@ -22,8 +17,6 @@ const colunas = [
         </p>
 
         <Tabela 
-                dadosBase={Equipamentos}
-                setDadosBase={setEquipamentos}
                 colunas={colunas}
                 titulo_cadastro={"Cadastro de Equipamento"}
                 nomeController={"/Equipamento"}

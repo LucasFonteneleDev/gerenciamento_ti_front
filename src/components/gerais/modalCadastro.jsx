@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import InputVariavel from './inputVariavel';
+import Modal from "./modal.jsx";
 
 export default function ModalCadastro({ 
     show,
@@ -7,10 +8,10 @@ export default function ModalCadastro({
     titulo,
     classesConteudo,
     dadosIniciais,
-    colunas,
+    colunas, //TOOD: trocar de colunas para um nome mais intuitivo, deve ser uma confiuração para renderizar os campos dinamicamente, não necessariamente colunas
     onSave}) {
 
-  const [form, setForm] = useState(dadosIniciais);
+  const [form, setForm] = useState(dadosIniciais);//TODO: mudar de form para um nome mais intuitivo, está confuso com a troca de nomes
 
   useEffect(() => {
     setForm(dadosIniciais);
@@ -30,59 +31,42 @@ export default function ModalCadastro({
   if (!show) return null;
 
   return (
-    <div>
-      <div className="modal-backdrop-custom">
-        <div className="modal show d-block" >
-          <div className="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document">
-            <div className="modal-content shadow-lg" onClick={(e) => e.stopPropagation()}>
+    <Modal titulo={titulo} onClose={onClose}>
+      <div className="modal-body" >
+        <div className={classesConteudo}>
+          {
+            // Object.entries(form).map(([chave, valor]) => 
+            //   chave != "id" && 
+            //   <InputVariavel
+            //     key={chave}
+            //     chave={chave}
+            //     valor={valor}
+            //     handleChange={handleChange}
+            //   />)
 
-              <div className="modal-header">
-                <h5 className="modal-title">{titulo}</h5>
-                <button type="button" className="btn-close" onClick={onClose}></button>
-              </div>
+            colunas.map(campo => {
+              return (
+                <InputVariavel
+                  key={campo.key}
+                  chave={campo.key}
+                  label={campo.label}
+                  valor={form[campo.key]}
+                  tipo={campo.tipo}
+                  handleChange={handleChange} //TODO: trocar função para receber o tipo do campo e renderizar o input correto
+                />
+              )
+              })
+            }
 
-              <div className="modal-body" >
-                <div className={classesConteudo}>
-                  {
-                    // Object.entries(form).map(([chave, valor]) => 
-                    //   chave != "id" && 
-                    //   <InputVariavel
-                    //     key={chave}
-                    //     chave={chave}
-                    //     valor={valor}
-                    //     handleChange={handleChange}
-                    //   />)
-
-                    colunas.map(campo => {
-
-                    return (
-                      <InputVariavel
-                        key={campo.key}
-                        chave={campo.key}
-                        label={campo.label}
-                        valor={form[campo.key]}
-                        handleChange={handleChange}
-                      />
-                    )
-                    })
-                  }
-
-                </div>
-              </div>
-
-              <div className="modal-footer">
-                <button className="btn btn-primary" onClick={handleSubmit}>Salvar</button>
-                <button className="btn btn-secondary" onClick={onClose}>Cancelar</button>
-              </div>
-
-            </div>
           </div>
         </div>
-      </div>
 
-      <br />
-
-    </div>
-    
+        <div className="modal-footer">
+          <button className="btn btn-primary" onClick={handleSubmit}>Salvar</button>
+          <button className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+          <button className="btn btn-success" onClick={onClose}>Pesquisar</button>
+        </div>
+      <div className={`modal-body ${classesConteudo}`}></div>
+    </Modal>
   );
 }

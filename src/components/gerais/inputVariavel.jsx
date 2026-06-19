@@ -1,12 +1,39 @@
 import React from 'react'
+import tipoInput from '/src/enum/tipoInput';
+import Modal from './modal.jsx';
 
-export default function InputVariavel({chave,label, valor, handleChange}) {
-  return (
-    <div className="m-2">
-        {
-            typeof valor === "boolean" ? (
-                <div className="form-check m-2">
-                    <input className="form-check-input" 
+export default function InputVariavel({chave, label, handleChange, valor, tipo}) {
+
+    function handleChangeSelecao(chave, targetValor) {
+
+    }
+
+    // function valueSelecao(valor) {
+    //     //TODO: escolher apenas valor do nome para mostrar, mas salvar id do objs escolhido
+    //     return (
+    //         "a"
+    //     );
+    // }
+
+    switch (tipo) {
+        case tipoInput.SELECAO:
+            return (
+                <div className="m-2">
+                    <label className="form-label">{label}</label>
+
+                    <input
+                    className="form-control"
+                    type="text"
+                    value={valor}
+                    onChange={e => handleChangeSelecao(chave, e.target.value)}
+                    />
+                </div>
+            );
+        case tipoInput.BOOLEANO:
+            return (
+                <div>
+                    <div className="form-check m-2">
+                        <input className="form-check-input" 
                             type="checkbox"
                             id={chave} 
                             for={chave}
@@ -15,13 +42,19 @@ export default function InputVariavel({chave,label, valor, handleChange}) {
                                 handleChange(chave, e.target.checked)}
                             />
 
-                    <label class="form-check-label" 
-                            for={chave}>
-                        {label}
-                    </label>
+                        <label class="form-check-label" 
+                                for={chave}>
+                            {label}
+                        </label>
+                    </div>
                 </div>
-            ) : (
-                <div>
+            );
+        case tipoInput.TEXTO:
+        default:
+            console.log(tipo);
+            console.log(tipoInput.BOOLEANO);
+            return (
+                <div className="m-2">
                     <label className="form-label">{label}</label>
 
                     <input
@@ -31,8 +64,6 @@ export default function InputVariavel({chave,label, valor, handleChange}) {
                     onChange={e => handleChange(chave, e.target.value)}
                     />
                 </div>
-            )
-        }
-    </div>
-  )
+            );
+    }
 }

@@ -1,6 +1,7 @@
 import Api from '../../services/api';
 import ModalCadastro from './modalCadastro'
 import { useState, useEffect } from 'react';
+import tipoInput from '../../enum/tipoInput';
 
 export default function Tabela(
     {   
@@ -112,13 +113,15 @@ export default function Tabela(
                 {colunas.map(col => (
                     <td key={col.key}>
                     {
-                        typeof filtrado[col.key] === "boolean" ?
+                        col.tipo === tipoInput.BOOLEANO ?
                         (
-                            <input className="form-check-input" 
+                            <input className="form-check-input mt-2" 
+                            readOnly
                             type="checkbox" 
                             id={col.key} 
                             for={col.key}
-                            checked={filtrado[col.key]}/>
+                            checked={!!filtrado[col.key]}//!! (dupla exclamação) para corrigir bug que impede o readOnly de funcionar
+                            />
                         ):
                         (
                             filtrado[col.key]

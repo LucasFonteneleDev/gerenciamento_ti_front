@@ -1,13 +1,17 @@
 import Tabela from '../components/gerais/tabela'
 import { useState } from 'react';
-import tipoInput from '/src/enum/tipoInput';
+import tipoInput from '../../src/enum/tipoInput';
 
 export default function Empresas() {
   const colunas = [
-    { key: 'nome', label: 'Loja' },
+    { key: 'nome_Loja', label: 'Loja' },
     { key: 'cnpj', label: 'CNPJ' },
-    { key: 'responsavel', label: 'Responsável', tipo: tipoInput.SELECAO, displayPath: "funcionario.nome", tituloPesquisa: "Funcionário Responsável"},
-    { key: 'contato', label: 'Contato'}
+    { key: 'responsavel', label: 'Responsável',//todo: não mostra valor nenhum na TABELA
+                                                //necessário manipular o endpoint de listagem e trazer o nome, cadastra-lo aqui.
+                                                //necessário configurar campos não apresentáveis
+                                                //CONCLUSÃO: Amadurecer o framework de front bound by backend
+        tipo: tipoInput.SELECAO, displayPath: "funcionario.nome",
+        tituloPesquisa: "Funcionário Responsável"},
   ];
 
   return (

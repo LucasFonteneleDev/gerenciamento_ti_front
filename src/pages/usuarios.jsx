@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Tabela from '../components/gerais/tabela';
-import tipoInput from "/src/enum/tipoInput.jsx";
+import tipoInput from "../../src/enum/tipoInput.jsx";
 
 export default function Usuarios() {
   const colunas = [

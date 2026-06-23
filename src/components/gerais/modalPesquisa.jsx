@@ -4,18 +4,18 @@ import api from '../../services/api';
 import { useState, useEffect } from 'react';
 
 
-export default function ModalPesquisa({show, onClose, onSave, titulo, controller, }) {
+export default function ModalPesquisa({show, onClose, onSave, titulo, controller, displayPath}) {
   //carregar listagem de ítens de qualquer endpoint
   //vai requerer outra
   //TODO: requerer SCHEMAS do banco de dados ao invés de salvar na pagina, repassar apenas a controller a ser requisitada
   // por enquanto vou terminar o modal de pesquisa e resolver os bugs da CRUD com a API
+  //TODO: Alguns bugs do CRUD só podem ser resolvidos ajustando primeiro as SCHEMAS
 
   const colunas = [
     { key: 'nome', label: 'Nome' },
     { key: 'email', label: 'E-mail' },
     { key: 'contato', label: 'Contato' }
   ];
-
   
  useEffect(() => {
     async function carregar() {
@@ -48,7 +48,7 @@ export default function ModalPesquisa({show, onClose, onSave, titulo, controller
   return (
     <Modal
       onClose={onClose}
-      titulo={"Pesquisa"}
+      titulo={titulo}
     >
       <div className="modal-body">
           <div className="d-flex" role="search">
@@ -94,7 +94,7 @@ export default function ModalPesquisa({show, onClose, onSave, titulo, controller
                       <div className="d-flex justify-content-around">
                           <button
                               className="btn btn-primary"
-                              onClick={() => onSave(filtrado.id)}
+                              onClick={() => onSave(filtrado)}
                           >
                               Selecionar
                           </button>

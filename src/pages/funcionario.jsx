@@ -1,13 +1,16 @@
 import Tabela from '../components/gerais/tabela';
-
+import tipoInput from '../../src/enum/tipoInput';
 import React, { useState } from 'react'
 
 export default function Funcionario() {
 
     const colunas = [
-    { key: 'nome', label: 'Nome' },
-    { key: 'email', label: 'E-mail' },
-    { key: 'contato', label: 'Contato' }
+      { key: 'email', label: 'E-mail' },
+      { key: 'nome', label: 'Nome' },
+      { key: 'contato', label: 'Contato'},
+      { key: 'senha', label: 'Senha'},
+      { key: 'usuario_Ativo', label: 'Ativo', tipo: tipoInput.BOOLEANO},
+      { key: 'esta_Ativo_Plataforma', label: 'Ativo na Plataforma', tipo: tipoInput.BOOLEANO},
   ];
 
   return (

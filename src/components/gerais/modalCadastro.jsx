@@ -10,17 +10,19 @@ export default function ModalCadastro({
     tituloPesquisa,
     classesConteudo,
     dadosIniciais,
-    colunas, //TOOD: trocar de colunas para um nome mais intuitivo, deve ser uma confiuração para renderizar os campos dinamicamente, não necessariamente colunas
+    colunas, //TODO: trocar de colunas para um nome mais intuitivo, deve ser uma confiuração para renderizar os campos dinamicamente, não necessariamente colunas
     onSave}) {
 
   const [form, setForm] = useState(dadosIniciais);//TODO: mudar de form para um nome mais intuitivo, está confuso com a troca de nomes
   const [showPesquisa, setShowPesquisa] = useState(false);
+  const [displayPathPesquisaTemp, setDisplayPathPesquisaTemp] = useState("");
 
   useEffect(() => {
     setForm(dadosIniciais);
   }, [dadosIniciais]);
 
   const handleChange = (chave, valor) => {
+    console.log("key: "+ chave + " || valor: "+ valor);
     setForm(prev => ({
       ...prev,
       [chave]: valor
@@ -35,6 +37,33 @@ export default function ModalCadastro({
     return path
       .split('.')
       .reduce((acc, key) => acc?.[key], obj);
+  }
+
+  function handlePesquisaRelacionado(objSelecionado){
+    //TODO: corrigir chamada de display de variável de nome do objeto
+    var trueDisplayPropriety = displayPathPesquisaTemp
+        .split('.')
+        .at(-1)
+    var displayValue = objSelecionado[trueDisplayPropriety]
+
+    console.log(trueDisplayPropriety + "  " + displayValue)
+
+    //todo: Funcionando apenas em uma tela e em um subObjeto.
+    //necessário resolver a questão dos schemas
+    //subObjeto aparentemente não pode ser alterado com o handleChangeAtual
+    handleChange("funcionarioId", objSelecionado.id);
+    handleChange(
+      displayPathPesquisaTemp,
+      displayValue
+     );
+
+    setDisplayPathPesquisaTemp("");
+    setShowPesquisa(false);
+  }
+
+  function pesquisarObjetoRelacionado(displayStringPath){
+    setDisplayPathPesquisaTemp(displayStringPath);
+    setShowPesquisa(true);
   }
 
   if (!show) return null;
@@ -69,7 +98,7 @@ export default function ModalCadastro({
                     }
                     tipo={campo.tipo}
                     handleChange={handleChange} //TODO: trocar função para receber o tipo do campo e renderizar o input correto
-                    onClick={e=> setShowPesquisa(true)}
+                    onClick={e=> pesquisarObjetoRelacionado(campo.displayPath)}
                   />
                 )
                 })
@@ -87,18 +116,12 @@ export default function ModalCadastro({
 
       <ModalPesquisa
           show={showPesquisa}
-          controller={"Empresa"}
-          onClose={e => {
-              setShowPesquisa(false);
-              //onclose tinha uma propriedade sendo passada (ID)
-          }}
-          titulo={"teste"}//TODO: separar melhor variáveis de ambiente entre configurações, layouts e strings,
+          displayPath={displayPathPesquisaTemp}//TODO: NÃO GOSTO DESSA SOLUÇÃO
+          controller={"Funcionario"}
+          onClose={e => {setShowPesquisa(false);}}
+          titulo={displayPathPesquisaTemp}//TODO: separar melhor variáveis de ambiente entre configurações, layouts e strings,
                                   //promover legibilidade e intuitividade.
-          onSave={e => {
-              setShowPesquisa(false);
-              //handlesave
-              //onclose tinha uma propriedade sendo passada (ID)
-          }}
+          onSave={handlePesquisaRelacionado}
       />
     </div>
   );

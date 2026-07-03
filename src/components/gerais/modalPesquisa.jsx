@@ -3,7 +3,6 @@ import Modal from './modal'
 import api from '../../services/api';
 import { useState, useEffect } from 'react';
 
-
 export default function ModalPesquisa({show, onClose, onSave, titulo, controller, displayPath}) {
   //carregar listagem de ítens de qualquer endpoint
   //vai requerer outra

@@ -6,12 +6,12 @@ export default function Empresas() {
   const colunas = [
     { key: 'nome_Loja', label: 'Loja' },
     { key: 'cnpj', label: 'CNPJ' },
-    { key: 'responsavel', label: 'Responsável',//todo: não mostra valor nenhum na TABELA
+    { key: 'funcionarioId', label: 'Responsável',//todo: trazer nome do funcionário na tabela 
                                                 //necessário manipular o endpoint de listagem e trazer o nome, cadastra-lo aqui.
                                                 //necessário configurar campos não apresentáveis
                                                 //CONCLUSÃO: Amadurecer o framework de front bound by backend
         tipo: tipoInput.SELECAO, displayPath: "funcionario.nome",
-        tituloPesquisa: "Funcionário Responsável"},
+        tituloPesquisa: "Funcionário Responsável", controller: "funcionario"},
   ];
 
   return (

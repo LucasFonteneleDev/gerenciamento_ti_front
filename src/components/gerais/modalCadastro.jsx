@@ -7,7 +7,6 @@ export default function ModalCadastro({
     show,
     onClose,
     titulo,
-    tituloPesquisa,
     classesConteudo,
     dadosIniciais,
     colunas, //TODO: trocar de colunas para um nome mais intuitivo, deve ser uma confiuração para renderizar os campos dinamicamente, não necessariamente colunas
@@ -15,23 +14,43 @@ export default function ModalCadastro({
 
   const [form, setForm] = useState(dadosIniciais);//TODO: mudar de form para um nome mais intuitivo, está confuso com a troca de nomes
   const [showPesquisa, setShowPesquisa] = useState(false);
+
+  //todo: transformar em objeto
   const [displayPathPesquisaTemp, setDisplayPathPesquisaTemp] = useState("");
+  const [controllerPesquisa, setControllerPesquisa] = useState("");
+  const [tituloPesquisa, setTituloPesquisa] = useState("");
+  const [propriedadeAlvo, setPropriedadeAlvo] = useState("");
 
   useEffect(() => {
     setForm(dadosIniciais);
   }, [dadosIniciais]);
 
-  const handleChange = (chave, valor) => {
-    console.log("key: "+ chave + " || valor: "+ valor);
-    setForm(prev => ({
-      ...prev,
-      [chave]: valor
-    }));
+  const handleChange = (path, value) => {
+    setForm(prev => {
+      const novo = structuredClone(prev);
+
+      const keys = path.split(".");
+      let atual = novo;
+
+      for (let i = 0; i < keys.length - 1; i++) {
+        atual = atual[keys[i]];
+      }
+
+      atual[keys[keys.length - 1]] = value;
+
+      return novo;
+    });
   };
 
   const handleSubmit = () => {
     onSave(form);
   };
+
+  function limparPesquisa(){
+    setDisplayPathPesquisaTemp("");
+    setControllerPesquisa("");
+    setPropriedadeAlvo("");
+  }
 
   function getNestedValue(obj, path) {
     return path
@@ -39,30 +58,13 @@ export default function ModalCadastro({
       .reduce((acc, key) => acc?.[key], obj);
   }
 
-  function handlePesquisaRelacionado(objSelecionado){
-    //TODO: corrigir chamada de display de variável de nome do objeto
-    var trueDisplayPropriety = displayPathPesquisaTemp
-        .split('.')
-        .at(-1)
-    var displayValue = objSelecionado[trueDisplayPropriety]
+  function pesquisarObjetoRelacionado(displayStringPath, controllerPesquisa, propriedadeAlvo){
+    console.log(displayStringPath, controllerPesquisa, propriedadeAlvo);
 
-    console.log(trueDisplayPropriety + "  " + displayValue)
-
-    //todo: Funcionando apenas em uma tela e em um subObjeto.
-    //necessário resolver a questão dos schemas
-    //subObjeto aparentemente não pode ser alterado com o handleChangeAtual
-    handleChange("funcionarioId", objSelecionado.id);
-    handleChange(
-      displayPathPesquisaTemp,
-      displayValue
-     );
-
-    setDisplayPathPesquisaTemp("");
-    setShowPesquisa(false);
-  }
-
-  function pesquisarObjetoRelacionado(displayStringPath){
     setDisplayPathPesquisaTemp(displayStringPath);
+    setControllerPesquisa(controllerPesquisa);
+    setPropriedadeAlvo(propriedadeAlvo);
+
     setShowPesquisa(true);
   }
 
@@ -92,13 +94,19 @@ export default function ModalCadastro({
                     chave={campo.key}
                     label={campo.label}
                     valor={
+                        //todo: utilizar enumerator e checar o tipo do valor
                         campo.displayPath
                             ? getNestedValue(form, campo.displayPath)
                             : form[campo.key]
                     }
                     tipo={campo.tipo}
                     handleChange={handleChange} //TODO: trocar função para receber o tipo do campo e renderizar o input correto
-                    onClick={e=> pesquisarObjetoRelacionado(campo.displayPath)}
+                    onClick={e=> 
+                      pesquisarObjetoRelacionado(
+                        campo.displayPath,
+                        campo.controller,
+                        campo.key
+                      )}
                   />
                 )
                 })
@@ -117,7 +125,7 @@ export default function ModalCadastro({
       <ModalPesquisa
           show={showPesquisa}
           displayPath={displayPathPesquisaTemp}//TODO: NÃO GOSTO DESSA SOLUÇÃO
-          controller={"Funcionario"}
+          controller={controllerPesquisa}//TODO: NÃO GOSTO DESSA SOLUÇÃO
           onClose={e => {setShowPesquisa(false);}}
           titulo={displayPathPesquisaTemp}//TODO: separar melhor variáveis de ambiente entre configurações, layouts e strings,
                                   //promover legibilidade e intuitividade.
@@ -125,4 +133,25 @@ export default function ModalCadastro({
       />
     </div>
   );
+
+  function handlePesquisaRelacionado(objSelecionado){
+    //TODO: corrigir chamada de display de variável de nome do objeto
+    var trueDisplayPropriety = displayPathPesquisaTemp
+        .split('.')
+        .at(-1)
+    var displayValue = objSelecionado[trueDisplayPropriety]
+
+    // console.log(trueDisplayPropriety + "  " + displayValue)
+
+    //todo: propriedadeAlvoPreenchidaIncorretamente
+    handleChange(propriedadeAlvo, objSelecionado.id);
+    //subObjeto aparentemente não pode ser alterado com o handleChangeAtual
+    handleChange(
+      displayPathPesquisaTemp,
+      displayValue
+     );
+
+    limparPesquisa(); 
+    setShowPesquisa(false);
+  }
 }

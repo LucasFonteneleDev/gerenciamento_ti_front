@@ -79,6 +79,23 @@ export default function Tabela(
         )
     );
 
+    const renderCelula = (filtrado, col) => {
+        switch (col.tipo) {
+            case tipoInput.BOOLEANO:
+                return (
+                    <input
+                        className="form-check-input mt-2"
+                        readOnly
+                        type="checkbox"
+                        checked={!!filtrado[col.key]}
+                    />
+                );
+
+            default:
+                return filtrado[col.key];
+        }
+    };
+
   return (
     <div>
         <hr />
@@ -112,21 +129,7 @@ export default function Tabela(
                 <tr key={filtrado.id}>
                 {colunas.map(col => (
                     <td key={col.key}>
-                    {
-                        col.tipo === tipoInput.BOOLEANO ?
-                        (
-                            <input className="form-check-input mt-2" 
-                            readOnly
-                            type="checkbox" 
-                            id={col.key} 
-                            for={col.key}
-                            checked={!!filtrado[col.key]}//!! (dupla exclamação) para corrigir bug que impede o readOnly de funcionar
-                            />
-                        ):
-                        (
-                            filtrado[col.key]
-                        )
-                    }
+                        {renderCelula(filtrado, col)}
                     </td>
                 ))}
                 <td>

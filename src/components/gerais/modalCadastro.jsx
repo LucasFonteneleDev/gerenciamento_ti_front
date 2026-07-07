@@ -76,17 +76,6 @@ export default function ModalCadastro({
         <div className="modal-body" >
           <div className={classesConteudo}>
             {
-              // Object.entries(form).map(([chave, valor]) => 
-              //   chave != "id" && 
-              //   <InputVariavel
-              //     key={chave}
-              //     chave={chave}
-              //     valor={valor}
-              //     handleChange={handleChange}
-              //   />)
-
-              //não sei se handlechange vai saber lidar com a mudança da ID referencia do campo
-              //mas vou tentar mesmo assim, quem sabe dessa forma 
               schema_cadastro.map(campo => {
                 return (
                   <InputVariavel

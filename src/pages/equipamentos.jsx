@@ -1,14 +1,8 @@
 import React, { useState } from 'react'
 import Tabela from '../components/gerais/tabela';
+import {schema_cadastro, schema_tabela} from "../schemas/equipamentosSchema.jsx";
 
 export default function Equipamentos() {
-
-const colunas = [
-    {key: "tipo", label: "Tipo"},
-    {key: "numero_serie", label: "N° de Série"},
-    {key: "loja", label: "Loja"},
-    {key: "responsavel", label: "Responsável"}
-];
 
   return (
     <div>
@@ -17,7 +11,8 @@ const colunas = [
         </p>
 
         <Tabela 
-                colunas={colunas}
+                schema_tabela={schema_tabela}
+                schema_cadastro={schema_cadastro}
                 titulo_cadastro={"Cadastro de Equipamento"}
                 nomeController={"/Equipamento"}
                 />

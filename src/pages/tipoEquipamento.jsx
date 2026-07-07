@@ -1,10 +1,7 @@
 import Tabela from '../components/gerais/tabela';
+import {schema_cadastro, schema_tabela} from "../schemas/tipoEquipamentoSchema.jsx";
 
 export default function TipoEquipamento() {
-    const colunas = [
-        { key: 'descricao', label: 'Descricao' },
-        { key: 'observacao', label: 'Observação' }
-    ];
 
   return (
     <div>
@@ -13,7 +10,8 @@ export default function TipoEquipamento() {
         </p>
 
         <Tabela
-            colunas={colunas}
+            schema_tabela={schema_tabela}
+            schema_cadastro={schema_cadastro}
             titulo_cadastro={"Cadastro de Tipo de Equipamento"}
             nomeController={"/TipoEquipamento"}
         />

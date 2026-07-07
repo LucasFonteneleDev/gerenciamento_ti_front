@@ -9,7 +9,7 @@ export default function ModalCadastro({
     titulo,
     classesConteudo,
     dadosIniciais,
-    colunas, //TODO: trocar de colunas para um nome mais intuitivo, deve ser uma confiuração para renderizar os campos dinamicamente, não necessariamente colunas
+    schema_cadastro, //TODO: trocar de schema_cadastro para um nome mais intuitivo, deve ser uma confiuração para renderizar os campos dinamicamente, não necessariamente schema_cadastro
     onSave}) {
 
   const [form, setForm] = useState(dadosIniciais);//TODO: mudar de form para um nome mais intuitivo, está confuso com a troca de nomes
@@ -17,7 +17,7 @@ export default function ModalCadastro({
 
   //todo: transformar em objeto
   const [displayPathPesquisaTemp, setDisplayPathPesquisaTemp] = useState("");
-  const [controllerPesquisa, setControllerPesquisa] = useState("");
+  const [controllerPesquisa, setControllerPesquisa] = useState("");//todo: definir controller
   const [tituloPesquisa, setTituloPesquisa] = useState("");
   const [propriedadeAlvo, setPropriedadeAlvo] = useState("");
 
@@ -87,7 +87,7 @@ export default function ModalCadastro({
 
               //não sei se handlechange vai saber lidar com a mudança da ID referencia do campo
               //mas vou tentar mesmo assim, quem sabe dessa forma 
-              colunas.map(campo => {
+              schema_cadastro.map(campo => {
                 return (
                   <InputVariavel
                     key={campo.key}

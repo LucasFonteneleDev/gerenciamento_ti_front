@@ -1,17 +1,9 @@
 import Tabela from '../components/gerais/tabela';
 import tipoInput from '../../src/enum/tipoInput';
 import React, { useState } from 'react'
+import {schema_cadastro, schema_tabela} from "../schemas/funcionarioSchema.jsx";
 
 export default function Funcionario() {
-
-    const colunas = [
-      { key: 'email', label: 'E-mail' },
-      { key: 'nome', label: 'Nome' },
-      { key: 'contato', label: 'Contato'},
-      { key: 'senha', label: 'Senha'},
-      { key: 'usuario_Ativo', label: 'Ativo', tipo: tipoInput.BOOLEANO},
-      { key: 'esta_Ativo_Plataforma', label: 'Ativo na Plataforma', tipo: tipoInput.BOOLEANO},
-  ];
 
   return (
     <div>
@@ -20,7 +12,8 @@ export default function Funcionario() {
       </p>
 
       <Tabela 
-                colunas={colunas}
+                schema_tabela={schema_tabela}
+                schema_cadastro={schema_cadastro}
                 titulo_cadastro={"Cadastro de Funcionário"}
                 nomeController={"/Funcionario"}
                 />

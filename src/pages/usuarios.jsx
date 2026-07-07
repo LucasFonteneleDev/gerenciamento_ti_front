@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
 import Tabela from '../components/gerais/tabela';
 import tipoInput from "../../src/enum/tipoInput.jsx";
+import {schema_cadastro, schema_tabela} from "../schemas/usuarioSchema.jsx";
 
 export default function Usuarios() {
-  const colunas = [
-    { key: 'nome', label: 'Nome' },
-    { key: 'id_funcionario', label: 'Funcionario' },
-    { key: 'id_funcionario', label: 'Funcionario' },
-    { key: 'ativo', label: 'Ativo', tipo: tipoInput.BOOLEANO}
-  ];
 
   return (
     <div>
@@ -17,7 +12,8 @@ export default function Usuarios() {
       </p>
 
       <Tabela 
-        colunas={colunas}
+        schema_tabela={schema_tabela}
+        schema_cadastro={schema_cadastro}
         titulo_cadastro={"Cadastro de Usuário"}
         nomeController={"/Usuario"}
         />

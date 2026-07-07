@@ -5,8 +5,9 @@ import tipoInput from '../../enum/tipoInput';
 
 export default function Tabela(
     {   
-        colunas,
-        titulo_cadastro,
+        schema_tabela,
+        schema_cadastro,
+        titulo_cadastro,//todo: Adicionar à schema_cadastro
         nomeController
     }) {
 
@@ -25,7 +26,7 @@ export default function Tabela(
         setShowModal(true);
     }
 
-    function carregarListagem(){//TODO: aparentemente está sendo chamada duas vezes
+    function carregarListagem(){//TODO: está sendo chamada duas vezes
         Api.get(nomeController + "/listagem").then(data => {
             setDadosBase(data);
         });
@@ -39,7 +40,7 @@ export default function Tabela(
     const novoObjeto = {
         id: null,
         ...Object.fromEntries(
-            colunas.map(col => [col.key, ""])
+            schema_tabela.map(col => [col.key, ""])
         )
     };
 
@@ -118,7 +119,7 @@ export default function Tabela(
             <table className="table">
             <thead>
                 <tr>
-                {colunas.map(col => (
+                {schema_tabela.map(col => (
                     <th key={col.key}>{col.label}</th>
                 ))}
                 <th></th>
@@ -127,7 +128,7 @@ export default function Tabela(
             <tbody>
             {filtrados.map(filtrado => (
                 <tr key={filtrado.id}>
-                {colunas.map(col => (
+                {schema_tabela.map(col => (
                     <td key={col.key}>
                         {renderCelula(filtrado, col)}
                     </td>
@@ -163,7 +164,7 @@ export default function Tabela(
                 titulo={titulo_cadastro}
                 classesConteudo="d-flex flex-wrap"
                 dadosIniciais={objSelecionado}
-                colunas={colunas}
+                schema_cadastro={schema_cadastro}
                 onSave={handleSave}
             />
             )}

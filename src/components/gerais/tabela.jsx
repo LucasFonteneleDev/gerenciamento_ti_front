@@ -25,6 +25,12 @@ export default function Tabela(
 
         setShowModal(true);
     }
+    
+    function desativar(id){
+        Api.delete(nomeController +"/"+ id);
+
+        carregarListagem();
+    }
 
     function carregarListagem(){//TODO: está sendo chamada duas vezes
         Api.get(nomeController + "/listagem").then(data => {
@@ -65,10 +71,6 @@ export default function Tabela(
         setObjSelecionado(null);
         carregarListagem();
     };
-
-    function desativar(id){
-        alert("ops :0");
-    }
 
     const [busca, setBusca] = useState("");
   

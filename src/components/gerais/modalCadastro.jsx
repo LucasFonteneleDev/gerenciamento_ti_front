@@ -9,7 +9,7 @@ export default function ModalCadastro({
     titulo,
     classesConteudo,
     dadosIniciais,
-    schema_cadastro, //TODO: trocar de schema_cadastro para um nome mais intuitivo, deve ser uma confiuração para renderizar os campos dinamicamente, não necessariamente schema_cadastro
+    schema_cadastro,
     onSave}) {
 
   const [form, setForm] = useState(dadosIniciais);//TODO: mudar de form para um nome mais intuitivo, está confuso com a troca de nomes
@@ -130,11 +130,7 @@ export default function ModalCadastro({
         .at(-1)
     var displayValue = objSelecionado[trueDisplayPropriety]
 
-    // console.log(trueDisplayPropriety + "  " + displayValue)
-
-    //todo: propriedadeAlvoPreenchidaIncorretamente
     handleChange(propriedadeAlvo, objSelecionado.id);
-    //subObjeto aparentemente não pode ser alterado com o handleChangeAtual
     handleChange(
       displayPathPesquisaTemp,
       displayValue

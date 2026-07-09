@@ -4,6 +4,6 @@ Sistema web de gerenciamento de equipamentos e chamados. Utilizando propriedades
 
 ## Descrição
 
-Surgiu da necessidade de controlar a propriedade e histórico de equipamentos como também demonstrar habilidades com o frontend. 
+Surgiu da necessidade de controlar o patrimônio e histórico dos equipamentos, como também demonstrar habilidades com o frontend. 
 
-Logo percebi que poderia implementar a geraçao programática de telas Crud. Esta proposta aumenta o tempo inicial de desenvolvimento, porém promove um desafio interessante para a evolução profissional. Também permite a padronização das telas e uma escalabilidade incomparável.
+Logo percebi que poderia implementar a geraçao programática de telas CRUD. Esta proposta aumenta o tempo inicial de desenvolvimento, porém promove um desafio interessante para a evolução profissional. Também permite a padronização das telas e uma escalabilidade incomparável.

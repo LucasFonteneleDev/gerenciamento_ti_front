@@ -2,20 +2,12 @@ import React from 'react'
 import Modal from './modal'
 import api from '../../services/api';
 import { useState, useEffect } from 'react';
+import schema_pesquisa from "../../schemas/schemasPesquisaGeral.jsx"
 
-export default function ModalPesquisa({show, onClose, onSave, titulo, controller, displayPath}) {
-  //carregar listagem de ítens de qualquer endpoint
-  //vai requerer outra
-  //TODO: requerer SCHEMAS do banco de dados ao invés de salvar na pagina, repassar apenas a controller a ser requisitada
-  // por enquanto vou terminar o modal de pesquisa e resolver os bugs da CRUD com a API
-  //TODO: Alguns bugs do CRUD só podem ser resolvidos ajustando primeiro as SCHEMAS
+export default function ModalPesquisa({show, onClose, onSelect, titulo, controller, id_schema_pesquisa}) {
+  //todo: avaliar se constante é o tipo correto neste contexto
+  const schema_colunas_pesquisa = schema_pesquisa[id_schema_pesquisa];
 
-  const colunas = [
-    { key: 'nome', label: 'Nome' },
-    { key: 'email', label: 'E-mail' },
-    { key: 'contato', label: 'Contato' }
-  ];
-  
  useEffect(() => {
     async function carregar() {
         try {
@@ -62,7 +54,7 @@ export default function ModalPesquisa({show, onClose, onSave, titulo, controller
             <table className="table">
               <thead>
                   <tr>
-                  {colunas.map(col => (
+                  {schema_colunas_pesquisa.map(col => (
                       <th key={col.key}>{col.label}</th>
                   ))}
                   <th></th>
@@ -71,7 +63,7 @@ export default function ModalPesquisa({show, onClose, onSave, titulo, controller
               <tbody>
               {filtrados.map(filtrado => (
                   <tr key={filtrado.id}>
-                    {colunas.map(col => 
+                    {schema_colunas_pesquisa.map(col => 
                     (
                         <td key={col.key}>
                           {
@@ -93,7 +85,7 @@ export default function ModalPesquisa({show, onClose, onSave, titulo, controller
                       <div className="d-flex justify-content-around">
                           <button
                               className="btn btn-primary"
-                              onClick={() => onSave(filtrado)}
+                              onClick={() => onSelect(filtrado)}
                           >
                               Selecionar
                           </button>

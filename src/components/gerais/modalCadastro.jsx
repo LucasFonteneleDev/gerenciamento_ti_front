@@ -12,34 +12,28 @@ export default function ModalCadastro({
     schema_cadastro,
     onSave}) {
 
-  const [form, setForm] = useState(dadosIniciais);//TODO: mudar de form para um nome mais intuitivo, está confuso com a troca de nomes
+  const [form, setForm] = useState(dadosIniciais);
   const [showPesquisa, setShowPesquisa] = useState(false);
 
   //todo: transformar em objeto
-  const [displayPathPesquisaTemp, setDisplayPathPesquisaTemp] = useState("");
-  const [controllerPesquisa, setControllerPesquisa] = useState("");//todo: definir controller
+  const [id_schema_pesquisa, setId_schema_pesquisa] = useState("")
   const [tituloPesquisa, setTituloPesquisa] = useState("");
+  const [nomeColunaPesquisa, setNomeColunaPesquisa] = useState("");
+  const [controllerPesquisa, setControllerPesquisa] = useState("");
+  const [keyCaixaTexto, setKeyCaixaTexto] = useState("");
   const [propriedadeAlvo, setPropriedadeAlvo] = useState("");
 
   useEffect(() => {
     setForm(dadosIniciais);
   }, [dadosIniciais]);
 
-  const handleChange = (path, value) => {
-    setForm(prev => {
-      const novo = structuredClone(prev);
+  const handleChange = (chave, valor) => {
+         console.log("chave: "+ chave + " || valor: "+ valor);
 
-      const keys = path.split(".");
-      let atual = novo;
-
-      for (let i = 0; i < keys.length - 1; i++) {
-        atual = atual[keys[i]];
-      }
-
-      atual[keys[keys.length - 1]] = value;
-
-      return novo;
-    });
+    setForm(prev => ({
+      ...prev,
+      [chave]: valor
+    }));
   };
 
   const handleSubmit = () => {
@@ -47,8 +41,11 @@ export default function ModalCadastro({
   };
 
   function limparPesquisa(){
-    setDisplayPathPesquisaTemp("");
+    setTituloPesquisa("");
+    setKeyCaixaTexto("");
+    setNomeColunaPesquisa("");
     setControllerPesquisa("");
+    setId_schema_pesquisa("");
     setPropriedadeAlvo("");
   }
 
@@ -58,17 +55,58 @@ export default function ModalCadastro({
       .reduce((acc, key) => acc?.[key], obj);
   }
 
-  function pesquisarObjetoRelacionado(displayStringPath, controllerPesquisa, propriedadeAlvo){
-    console.log(displayStringPath, controllerPesquisa, propriedadeAlvo);
+  function pesquisarObjetoRelacionado(
+      keyCaixaTexto, 
+      colunaLabel,
+      controller, 
+      propriedade_alvo, 
+      tituloPesquisa,
+      id_schema_pesquisa
+    ){
 
-    setDisplayPathPesquisaTemp(displayStringPath);
-    setControllerPesquisa(controllerPesquisa);
-    setPropriedadeAlvo(propriedadeAlvo);
+    setKeyCaixaTexto(keyCaixaTexto);
+    setNomeColunaPesquisa(colunaLabel);
+    setControllerPesquisa(controller);
+    setPropriedadeAlvo(propriedade_alvo);
+    setTituloPesquisa(tituloPesquisa);
+    setId_schema_pesquisa(id_schema_pesquisa)
 
     setShowPesquisa(true);
   }
 
   if (!show) return null;
+
+  function configurarCampo(campo){
+
+    if(campo.id_de_nome){
+      return;//todo: verificar se está atrapalhando o layout de cadastro
+    }
+
+    return (
+      <InputVariavel
+        key={campo.key}
+        chave={campo.key}
+        label={campo.label}
+        valor={
+            //todo: utilizar enumerator e checar o tipo do valor
+            campo.displayPath
+                ? getNestedValue(form, campo.displayPath)
+                : form[campo.key]
+        }
+        tipo={campo.tipo}
+        handleChange={handleChange} //TODO: trocar função para receber o tipo do campo e renderizar o input correto
+        onClick={e=> 
+          pesquisarObjetoRelacionado(
+            campo.key, //identificador da caixa de texto que vai receber o valor visual
+            campo.colunaLabel,//Propriedade do objeto selectionado que preenche a caixa de texto
+            campo.controller,//controller de onde vem a listagem para pesquisa
+            campo.propriedade_alvo,//chave do valor a ser alterado no form
+            campo.tituloPesquisa,
+            campo.id_schema_pesquisa
+          )}
+      />
+    )
+  }
 
   return (
     <div>
@@ -76,65 +114,36 @@ export default function ModalCadastro({
         <div className="modal-body" >
           <div className={classesConteudo}>
             {
-              schema_cadastro.map(campo => {
-                return (
-                  <InputVariavel
-                    key={campo.key}
-                    chave={campo.key}
-                    label={campo.label}
-                    valor={
-                        //todo: utilizar enumerator e checar o tipo do valor
-                        campo.displayPath
-                            ? getNestedValue(form, campo.displayPath)
-                            : form[campo.key]
-                    }
-                    tipo={campo.tipo}
-                    handleChange={handleChange} //TODO: trocar função para receber o tipo do campo e renderizar o input correto
-                    onClick={e=> 
-                      pesquisarObjetoRelacionado(
-                        campo.displayPath,
-                        campo.controller,
-                        campo.key
-                      )}
-                  />
-                )
-                })
-              }
-
-            </div>
+              schema_cadastro.map(campo => configurarCampo(campo))
+            }
           </div>
+        </div>
 
-          <div className="modal-footer">
-            <button className="btn btn-primary" onClick={handleSubmit}>Salvar</button>
-            <button className="btn btn-secondary" onClick={onClose}>Cancelar</button>
-          </div>
-        <div className={`modal-body ${classesConteudo}`}></div>
+        <div className="modal-footer">
+          <button className="btn btn-primary" onClick={handleSubmit}>Salvar</button>
+          <button className="btn btn-secondary" onClick={onClose}>Cancelar</button>
+        </div>
+
+        <div className={`modal-body ${classesConteudo}`}>
+        </div>
       </Modal>
 
       <ModalPesquisa
           show={showPesquisa}
-          displayPath={displayPathPesquisaTemp}//TODO: NÃO GOSTO DESSA SOLUÇÃO
-          controller={controllerPesquisa}//TODO: NÃO GOSTO DESSA SOLUÇÃO
+          controller={controllerPesquisa}//será alterado quando estas informações forem centralizadas em objeto
           onClose={e => {setShowPesquisa(false);}}
-          titulo={displayPathPesquisaTemp}//TODO: separar melhor variáveis de ambiente entre configurações, layouts e strings,
-                                  //promover legibilidade e intuitividade.
-          onSave={handlePesquisaRelacionado}
+          titulo={tituloPesquisa}
+          id_schema_pesquisa={id_schema_pesquisa}
+          onSelect={handlePesquisaRelacionado}
       />
     </div>
   );
 
   function handlePesquisaRelacionado(objSelecionado){
-    //TODO: corrigir chamada de display de variável de nome do objeto
-    var trueDisplayPropriety = displayPathPesquisaTemp
-        .split('.')
-        .at(-1)
-    var displayValue = objSelecionado[trueDisplayPropriety]
-
     handleChange(propriedadeAlvo, objSelecionado.id);
-    handleChange(
-      displayPathPesquisaTemp,
-      displayValue
-     );
+
+    var displayValue = objSelecionado[nomeColunaPesquisa]
+    handleChange(keyCaixaTexto, displayValue);
 
     limparPesquisa(); 
     setShowPesquisa(false);

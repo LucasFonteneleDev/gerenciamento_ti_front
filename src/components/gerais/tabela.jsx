@@ -7,7 +7,7 @@ export default function Tabela(
     {   
         schema_tabela,
         schema_cadastro,
-        titulo_cadastro,//todo: Adicionar à schema_cadastro
+        titulo_cadastro,
         nomeController
     }) {
 
@@ -121,8 +121,8 @@ export default function Tabela(
             <table className="table">
             <thead>
                 <tr>
-                {schema_tabela.map(col => (
-                    <th key={col.key}>{col.label}</th>
+                {schema_tabela.map(coluna => (
+                    <th key={coluna.key}>{coluna.label}</th>
                 ))}
                 <th></th>
                 </tr>

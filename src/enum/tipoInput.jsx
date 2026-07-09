@@ -1,5 +1,5 @@
 const tipoInput = {
-    TEXTO: "TEXTO",
+    TEXTO: "TEXTO", //Valor Padrão. Incluso apenas para melhorar legibilidade.
     BOOLEANO: "BOOLEANO",
     DATA: "DATA",
     NUMERO: "NUMERO",

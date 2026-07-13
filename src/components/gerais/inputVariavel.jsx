@@ -47,6 +47,8 @@ export default function InputVariavel({chave, label, handleChange, valor, tipo, 
                     </div>
                 </div>
             );
+        case tipoInput.SENHA:
+            //TODO: adicionar tipo senha, que adiciona duas div de confirmação + validação de conformidade
         case tipoInput.TEXTO:
         default:
             return (

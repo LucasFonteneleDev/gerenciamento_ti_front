@@ -3,7 +3,8 @@ const tipoInput = {
     BOOLEANO: "BOOLEANO",
     DATA: "DATA",
     NUMERO: "NUMERO",
-    SELECAO: "SELECAO"
+    SELECAO: "SELECAO",
+    SENHA: "SENHA"
 };
 
 export default tipoInput;

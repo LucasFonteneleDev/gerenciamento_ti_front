@@ -28,8 +28,6 @@ export default function ModalCadastro({
   }, [dadosIniciais]);
 
   const handleChange = (chave, valor) => {
-         console.log("chave: "+ chave + " || valor: "+ valor);
-
     setForm(prev => ({
       ...prev,
       [chave]: valor

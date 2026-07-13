@@ -26,9 +26,8 @@ export default function Tabela(
         setShowModal(true);
     }
     
-    function desativar(id){
-        Api.delete(nomeController +"/"+ id);
-
+    async function desativar(id){
+        await Api.delete(nomeController +"/"+ id);
         carregarListagem();
     }
 

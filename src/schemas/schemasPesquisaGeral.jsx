@@ -7,6 +7,11 @@ const schema_pesquisa = {
     "pesquisaTipoEquipamento": [
         { key: 'descricao', label: 'Descricao' },
         { key: 'observacao', label: 'Observação' }
+    ],
+    "pesquisaEmpresa":[
+        { key: 'nome_Loja', label: 'Loja' },
+        { key: 'cnpj', label: 'CNPJ' },
+        { key: 'funcionarioIdNome', label: 'Responsável'}
     ]
 }
 

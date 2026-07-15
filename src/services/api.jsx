@@ -3,7 +3,7 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "https://localhost:7225/api",
+      baseURL: "http://192.168.1.123:7225/api",
       // baseURL: "https://jsonplaceholder.typicode.com",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ class Api {
           window.location.href = "/gerenciamento_ti_front/login";
         }
         else if (isLoginRequest) {
-          alert("Login inválido");
+          alert(JSON.stringify(error ));
         }
 
         return Promise.reject(error);

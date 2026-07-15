@@ -28,6 +28,8 @@ export default function ModalCadastro({
   }, [dadosIniciais]);
 
   const handleChange = (chave, valor) => {
+    // console.log("chave: "+chave +" | "+"Valor: "+valor);
+    
     setForm(prev => ({
       ...prev,
       [chave]: valor
@@ -67,7 +69,7 @@ export default function ModalCadastro({
     setControllerPesquisa(controller);
     setPropriedadeAlvo(propriedade_alvo);
     setTituloPesquisa(tituloPesquisa);
-    setId_schema_pesquisa(id_schema_pesquisa)
+    setId_schema_pesquisa(id_schema_pesquisa);
 
     setShowPesquisa(true);
   }

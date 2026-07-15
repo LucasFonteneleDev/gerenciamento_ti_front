@@ -39,18 +39,17 @@ export default function Tabela(
 
     //ABRE O MODAL CONFIGURADO PARA CADASTRAR
     function cadastrar(){
+        //isso é uma solução temporária até que eu termine a implementação da API no front
+        //a alternativa seria editar o funcionamento do form para aceitar um schema do objeto
+        const novoObjeto = {
+            id: null,
+            ...Object.fromEntries(
+                schema_tabela.map(col => [col.key, ""])
+            )
+        };
 
-    //isso é uma solução temporária até que eu termine a implementação da API no front
-    //a alternativa seria editar o funcionamento do form para aceitar um schema do objeto
-    const novoObjeto = {
-        id: null,
-        ...Object.fromEntries(
-            schema_tabela.map(col => [col.key, ""])
-        )
-    };
-
-    setObjSelecionado(novoObjeto);
-    setShowModal(true);
+        setObjSelecionado(novoObjeto);
+        setShowModal(true);
     }
 
     //TODO: no momento de salvar também é necessário adequar a forma como a API aceita os dados

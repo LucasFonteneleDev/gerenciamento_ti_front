@@ -3,7 +3,8 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "http://192.168.1.123:7225/api",
+      baseURL: "https://birthday-circular-sponsorship-greetings.trycloudflare.com/api",
+      // baseURL: "http://localhost:5000/api",
       // baseURL: "https://jsonplaceholder.typicode.com",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +37,7 @@ class Api {
           !isLoginRequest
         ) {
           localStorage.removeItem("token");
-          window.location.href = "/gerenciamento_ti_front/login";
+          window.location.href = "/gerenciamento_ti_front/#/login";
         }
         else if (isLoginRequest) {
           alert(JSON.stringify(error ));

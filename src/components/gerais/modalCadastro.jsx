@@ -119,7 +119,8 @@ export default function ModalCadastro({
           </div>
         </div>
 
-        <div className="modal-footer">
+        <div className="modal-footer" //todo: aceitar salvar com ENTER e pedir confirmação para salvar
+        >
           <button className="btn btn-primary" onClick={handleSubmit}>Salvar</button>
           <button className="btn btn-secondary" onClick={onClose}>Cancelar</button>
         </div>

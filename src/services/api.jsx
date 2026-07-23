@@ -39,13 +39,13 @@ class Api {
           window.location.href = "/gerenciamento_ti_front/login";
         }
         else if (isLoginRequest) {
-          alert(JSON.stringify(error ));
+          alert(JSON.stringify(error));
         }
 
         return Promise.reject(error);
       }
     );
-  
+
   }
 
   get(url, config = {}) {

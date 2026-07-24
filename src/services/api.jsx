@@ -3,7 +3,7 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "https://birthday-circular-sponsorship-greetings.trycloudflare.com/api",
+      baseURL: "https://emails-connected-longest-labor.trycloudflare.com/api",
       // baseURL: "http://localhost:5000/api",
       // baseURL: "https://jsonplaceholder.typicode.com",
       headers: {

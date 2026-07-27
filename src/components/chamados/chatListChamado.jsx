@@ -1,5 +1,6 @@
 export default function ChatListContact({ usuario, requisitante, texto, tempo, naoLida, qtdNaoLida }) {
 
+  //todo: adicionar esta função a pasta de útil
   function formatarDataChat(dataString) {
     const data = new Date(dataString);
     const hoje = new Date();

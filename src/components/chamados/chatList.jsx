@@ -15,26 +15,16 @@ export default function ChatList({ chats, Usuarios }) {
       .then(data => setChamados(data));
   }
 
-  const filtrados = chats.filter(chat => {
-    const usuario = Usuarios?.[chat.id_usuario];
+  const filtrados = CHAMADOS.filter(chamado => {
 
-    const textoChat = Object.values(chat).some(valor =>
+    const textoChat = Object.values(chamado).some(valor =>
       valor !== null &&
       valor !== undefined &&
       String(valor).toLowerCase().includes(busca.toLowerCase())
     );
 
-    const textoUsuario =
-      usuario &&
-      Object.values(usuario).some(valor =>
-        valor !== null &&
-        valor !== undefined &&
-        String(valor).toLowerCase().includes(busca.toLowerCase())
-      );
-
-    return textoChat || textoUsuario;
+    return textoChat;
   });
-
 
   return (
     <div className="card h-100">
@@ -58,7 +48,8 @@ export default function ChatList({ chats, Usuarios }) {
         <div className="flex-grow-1 overflow-auto">
           <ul className="list-unstyled mb-0">
 
-            {filtrados.map((chat, index) => (
+            {/* TODO: remover referencias a USUÁRIO e CHAT (listas locais) */}
+            {/* {filtrados.map((chat, index) => (
               <ChatListContact
                 key={chat.id}
                 usuario={Usuarios[chat.id_usuario]}
@@ -67,9 +58,9 @@ export default function ChatList({ chats, Usuarios }) {
                 naoLida={chat.naoLida}
                 qtdNaoLida={chat.qtdNaoLida}
               />
-            ))}
+            ))} */}
 
-            {CHAMADOS.map((chamado) => (
+            {filtrados.map((chamado) => (
               <ChatListContact
                 key={chamado.id}
                 requisitante={chamado.requisitanteInicialNome}

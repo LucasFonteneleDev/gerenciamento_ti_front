@@ -1,12 +1,12 @@
 import React from 'react'
-import MessageChat from '../components/chamados/messageChat'
+import PageChamados from '../components/chamados/PageChamados'
 import { useState } from 'react'
 
 export default function home() {
 
   return (
     <div>
-        <MessageChat/>
+        <PageChamados/>
     </div>
   )
 }

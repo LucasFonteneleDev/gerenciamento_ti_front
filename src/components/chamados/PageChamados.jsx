@@ -5,7 +5,7 @@ import TextAreaSend from './textAreaSend'
 import Api from '../../services/api';
 import { Await } from 'react-router-dom';
 
-export default function MessageChat() {
+export default function PageChamados() {
     const [IdChamadoSelecionado, setChamadoSelecionado] = useState(null);
     //lista de mensagens abertas atualmente.
     const [Mensagens, setMensagens] = useState()

@@ -3,15 +3,14 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "https://emails-connected-longest-labor.trycloudflare.com/api",
-      // baseURL: "http://localhost:5000/api",
+      baseURL: "https://https://vocals-bios-orders-ribbon.trycloudflare.com/api",
+      // baseURL: "http://localhost:5252/api",
       // baseURL: "https://jsonplaceholder.typicode.com",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    // Adiciona o JWT automaticamente
     this.api.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem("token");
@@ -29,18 +28,34 @@ class Api {
     this.api.interceptors.response.use(
       (response) => response,
       (error) => {
+
         const isLoginRequest =
           error.config?.url?.includes("/Login/login");
 
-        if (
-          error.response?.status === 401 &&
-          !isLoginRequest
-        ) {
-          localStorage.removeItem("token");
-          window.location.href = "/gerenciamento_ti_front/#/login";
+        if (error.response?.status === 401) {
+
+          if (!isLoginRequest) {
+            localStorage.removeItem("token");
+            window.location.href = "/gerenciamento_ti_front/#/login";
+          } 
+          else {
+            const mensagem =
+              error.response?.data?.message ??
+              "Usuário ou senha inválidos.";
+
+            alert(mensagem);
+          }
         }
-        else if (isLoginRequest) {
-          alert(JSON.stringify(error));
+        else if (error.response?.status === 500) {
+
+          alert(
+            error.response?.data?.message ??
+            "Erro interno do servidor."
+          );
+        }
+        else if (!error.response) {
+
+          alert("Não foi possível conectar ao servidor.");
         }
 
         return Promise.reject(error);

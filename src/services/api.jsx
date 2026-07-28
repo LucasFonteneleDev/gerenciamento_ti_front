@@ -24,6 +24,11 @@ class Api {
       (error) => Promise.reject(error)
     );
 
+    function RediriecionaParaLogin() {
+      localStorage.removeItem("token");
+      window.location.href = "/gerenciamento_ti_front/";
+    }
+
     // Trata respostas de erro
     this.api.interceptors.response.use(
       (response) => response,
@@ -35,9 +40,8 @@ class Api {
         if (error.response?.status === 401) {
 
           if (!isLoginRequest) {
-            localStorage.removeItem("token");
-            window.location.href = "/gerenciamento_ti_front/#/login";
-          } 
+            RediriecionaParaLogin();
+          }
           else {
             const mensagem =
               error.response?.data?.message ??
@@ -52,10 +56,14 @@ class Api {
             error.response?.data?.message ??
             "Erro interno do servidor."
           );
+
+          RediriecionaParaLogin();
         }
         else if (!error.response) {
 
           alert("Não foi possível conectar ao servidor.");
+
+          RediriecionaParaLogin();
         }
 
         return Promise.reject(error);

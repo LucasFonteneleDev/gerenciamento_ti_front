@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ChatListContact from './chatListChamado';
 import Api from '../../services/api';
 
-export default function ChatList({ chats, Usuarios }) {
+export default function ChatList({ onSelectChamado }) {
   const [busca, setBusca] = useState("");
   const [CHAMADOS, setChamados] = useState([]);
 
@@ -11,7 +11,7 @@ export default function ChatList({ chats, Usuarios }) {
   }, []);
 
   async function CarregaChamados() {
-    Api.get("Chamado/listagem")
+    await Api.get("Chamado/listagem")
       .then(data => setChamados(data));
   }
 
@@ -48,18 +48,6 @@ export default function ChatList({ chats, Usuarios }) {
         <div className="flex-grow-1 overflow-auto">
           <ul className="list-unstyled mb-0">
 
-            {/* TODO: remover referencias a USUÁRIO e CHAT (listas locais) */}
-            {/* {filtrados.map((chat, index) => (
-              <ChatListContact
-                key={chat.id}
-                usuario={Usuarios[chat.id_usuario]}
-                texto={chat.texto}
-                tempo={chat.tempo}
-                naoLida={chat.naoLida}
-                qtdNaoLida={chat.qtdNaoLida}
-              />
-            ))} */}
-
             {filtrados.map((chamado) => (
               <ChatListContact
                 key={chamado.id}
@@ -68,6 +56,9 @@ export default function ChatList({ chats, Usuarios }) {
                 tempo={chamado.inicio}
                 naoLida={true}
                 qtdNaoLida={1}
+                onClick={() => {
+                  onSelectChamado(chamado.id);
+                }}
               />
             ))}
 

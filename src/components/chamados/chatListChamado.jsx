@@ -1,4 +1,4 @@
-export default function ChatListContact({ usuario, requisitante, texto, tempo, naoLida, qtdNaoLida }) {
+export default function ChatListContact({ usuario, requisitante, texto, tempo, naoLida, qtdNaoLida, onClick }) {
 
   //todo: adicionar esta função a pasta de útil
   function formatarDataChat(dataString) {
@@ -49,7 +49,7 @@ export default function ChatListContact({ usuario, requisitante, texto, tempo, n
   }
 
   return (
-    <li class="pb-1 bg-body-tertiary">
+    <li onClick={onClick} class="pb-1 bg-body-tertiary">
       <a href="#" className="text-decoration-none">
         <div className="list-group">
           <div className="list-group-item">

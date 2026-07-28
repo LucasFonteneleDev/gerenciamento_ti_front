@@ -2,25 +2,28 @@ import React, { useState, useRef, useEffect } from 'react'
 import MessageCard from './messageCard'
 import ChatList from './chatList'
 import TextAreaSend from './textAreaSend'
+import Api from '../../services/api';
+import { Await } from 'react-router-dom';
 
 export default function MessageChat() {
-    //lista de chamados abertos
-    const [Chamados, setChamados] = useState([
-        { id_usuario: "0", texto: "Preciso de Ajuda!", tempo: "Agora", naoLida: true, qtdNaoLida: 1 },
-        { id_usuario: "1", texto: "Impressora parou", tempo: "Agora", naoLida: true, qtdNaoLida: 3 }
-    ])
-
+    const [IdChamadoSelecionado, setChamadoSelecionado] = useState(null);
     //lista de mensagens abertas atualmente.
-    const [Mensagens, setMensagens] = useState([
-        { id_usuario: "0", data: "13 minutos atrás", texto: "Olá! Esta é a primeira mensagem de teste." },
-        { id_usuario: "1", data: "13 minutos atrás", texto: "Que bom! Esta é a segunda mensagem de teste." }
-    ])
+    const [Mensagens, setMensagens] = useState()
 
-    //usuários
-    const [Usuarios, setUsuarios] = useState([
-        { id: "0", recebendo: true, foto: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp", usuario: "Renata - Adm" },
-        { id: "1", recebendo: false, foto: "https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp", usuario: "Lucas Dev" }
-    ])
+    async function SelecionarChamado(idChamado) {
+        await setChamadoSelecionado(idChamado);
+    }
+
+    useEffect(() => {
+        if (IdChamadoSelecionado !== null) {
+            CarregaMensagensChamado(IdChamadoSelecionado);
+        }
+    }, [IdChamadoSelecionado]);
+
+    async function CarregaMensagensChamado(idChamado) {
+        await Api.get("MensagemChamado/listagem/" + idChamado)
+            .then(data => setMensagens(data));
+    }
 
     //usuario que envia (DEMONSTRAÇÃO)
     const [valorSelecionado, setValorSelecionado] = useState("0");
@@ -49,13 +52,13 @@ export default function MessageChat() {
         }
 
         setMensagens((mensagensAtuais) => ([
-            ...mensagensAtuais,
-            {
-                id_usuario: valorSelecionado,
-                recebendo: false,
-                data: "temp",
-                texto: Texto
-            }
+            // ...mensagensAtuais,
+            // {
+            //     id_usuario: valorSelecionado,
+            //     recebendo: false,
+            //     data: "temp",
+            //     texto: Texto
+            // }
         ]));
 
         setTexto("");
@@ -70,10 +73,7 @@ export default function MessageChat() {
                         style={{ height: "calc(100vh - 170px)" }}
                     >
 
-                        <ChatList
-                            chats={Chamados}
-                            Usuarios={Usuarios}
-                        />
+                        <ChatList onSelectChamado={SelecionarChamado} />
 
                     </div>
 
@@ -83,17 +83,18 @@ export default function MessageChat() {
                         <div className="flex-grow-1 overflow-auto bg-light rounded">
                             <ul className="list-unstyled m-1" >
                                 {
-                                    Mensagens.map((mensagem) =>
+                                    Mensagens ? Mensagens.map((mensagem) =>
                                         <li className="d-flex mb-4">
                                             <MessageCard
-                                                recebendo={Usuarios[mensagem.id_usuario].recebendo}
+                                                //todo: na api definir via token quem está logado(??)
+                                                recebendo={true}
                                                 texto={mensagem.texto}
                                             // usuario={Usuarios[mensagem.id_usuario].usuario}
                                             // foto={Usuarios[mensagem.id_usuario].foto}
                                             />
 
                                         </li>
-                                    )
+                                    ) : null
                                 }
                             </ul>
                             <div ref={fimMensagensRef} />
@@ -104,16 +105,6 @@ export default function MessageChat() {
                                 onClick={Enviar}
                                 handleChange={handleTextoMensagem}
                             />
-                        </div>
-                        <div>
-                            <select
-                                className="form-select mt-1"
-                                value={valorSelecionado}
-                                onChange={handleChange}
-                                aria-label="Default select example">
-                                <option selected value="0">{Usuarios[0].usuario}</option>
-                                <option value="1">{Usuarios[1].usuario}</option>
-                            </select>
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import ChatListContact from './chatListChamado';
+import CardChamado from './cardChamado';
 import Api from '../../services/api';
 
-export default function ChatList({ onSelectChamado }) {
+export default function ListaCardChamados({ onSelectChamado }) {
   const [busca, setBusca] = useState("");
   const [CHAMADOS, setChamados] = useState([]);
 
@@ -49,7 +49,7 @@ export default function ChatList({ onSelectChamado }) {
           <ul className="list-unstyled mb-0">
 
             {filtrados.map((chamado) => (
-              <ChatListContact
+              <CardChamado
                 key={chamado.id}
                 requisitante={chamado.requisitanteInicialNome}
                 texto={chamado.assunto}

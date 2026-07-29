@@ -1,4 +1,4 @@
-export default function ChatListContact({ usuario, requisitante, texto, tempo, naoLida, qtdNaoLida, onClick }) {
+export default function CardChamado({ usuario, requisitante, texto, tempo, naoLida, qtdNaoLida, onClick }) {
 
   //todo: adicionar esta função a pasta de útil
   function formatarDataChat(dataString) {

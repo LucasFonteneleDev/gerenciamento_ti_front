@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import MessageCard from './messageCard'
-import ChatList from './chatList'
+import ListaCardChamados from './listaCardChamados'
 import TextAreaSend from './textAreaSend'
 import Api from '../../services/api';
 import { Await } from 'react-router-dom';
 
-export default function PageChamados() {
+export default function pageChamados() {
     const [IdChamadoSelecionado, setChamadoSelecionado] = useState(null);
     //lista de mensagens abertas atualmente.
     const [Mensagens, setMensagens] = useState()
@@ -73,7 +73,7 @@ export default function PageChamados() {
                         style={{ height: "calc(100vh - 170px)" }}
                     >
 
-                        <ChatList onSelectChamado={SelecionarChamado} />
+                        <ListaCardChamados onSelectChamado={SelecionarChamado} />
 
                     </div>
 

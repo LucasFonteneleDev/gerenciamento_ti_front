@@ -4,7 +4,13 @@ import Api from '../../services/api';
 
 export default function ListaCardChamados({ onSelectChamado }) {
   const [busca, setBusca] = useState("");
+  const [IdChamadoSelecionado, setIdChamadoSelecionado] = useState(0);
   const [CHAMADOS, setChamados] = useState([]);
+
+  function SetChamado(idchamado){
+    setIdChamadoSelecionado(idchamado);
+    onSelectChamado(idchamado);
+  }
 
   useEffect(() => {
     CarregaChamados();
@@ -57,8 +63,10 @@ export default function ListaCardChamados({ onSelectChamado }) {
                 naoLida={true}
                 qtdNaoLida={1}
                 onClick={() => {
-                  onSelectChamado(chamado.id);
+                  SetChamado(chamado.id);
                 }}
+
+                selecionado={chamado.id == IdChamadoSelecionado}
               />
             ))}
 

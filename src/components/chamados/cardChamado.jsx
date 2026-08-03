@@ -1,4 +1,4 @@
-export default function CardChamado({ usuario, requisitante, texto, tempo, naoLida, qtdNaoLida, onClick }) {
+export default function CardChamado({requisitante, texto, tempo, qtdNaoLida, onClick, selecionado}) {
 
   //todo: adicionar esta função a pasta de útil
   function formatarDataChat(dataString) {
@@ -52,14 +52,14 @@ export default function CardChamado({ usuario, requisitante, texto, tempo, naoLi
     <li onClick={onClick} class="pb-1 bg-body-tertiary">
       <a href="#" className="text-decoration-none">
         <div className="list-group">
-          <div className="list-group-item">
-            <div className="d-flex align-items-center">
+          <div className={selecionado ? "list-group-item bg-light" : "list-group-item "}>
+            <div className="d-flex align-items-center ">
 
               {/* Avatar */}
               <div className="flex-shrink-0">
                 <img
-                  src={usuario ? usuario.foto : requisitante}
-                  alt={usuario ? usuario.usuario : requisitante}
+                  src={requisitante}
+                  alt={requisitante}
                   className="rounded-circle"
                   width="50"
                   height="50"
@@ -70,7 +70,7 @@ export default function CardChamado({ usuario, requisitante, texto, tempo, naoLi
               <div className="flex-grow-1 ms-3 overflow-hidden">
                 <div className="d-flex justify-content-between">
                   <h6 className="mb-0 text-truncate">
-                    {usuario ? usuario.usuario : requisitante}
+                    {requisitante}
                   </h6>
                 </div>
 

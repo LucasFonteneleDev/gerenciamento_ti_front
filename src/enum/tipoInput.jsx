@@ -4,7 +4,8 @@ const tipoInput = {
     DATA: "DATA",
     NUMERO: "NUMERO",
     SELECAO: "SELECAO",
-    SENHA: "SENHA"
+    SENHA: "SENHA",
+    ICONE: "ICONE", //todo: adicionar tratamento de imput icone (sugiro utilizar tipoInput como uma molécula que englobará a célula de img e text)
 };
 
 export default tipoInput;

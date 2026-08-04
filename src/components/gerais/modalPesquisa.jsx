@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import schema_pesquisa from "../../schemas/schemasPesquisaGeral.jsx"
 
 export default function ModalPesquisa({show, onClose, onSelect, titulo, controller, id_schema_pesquisa}) {
-  //todo: avaliar se constante é o tipo correto neste contexto
   const schema_colunas_pesquisa = schema_pesquisa[id_schema_pesquisa];
 
  useEffect(() => {

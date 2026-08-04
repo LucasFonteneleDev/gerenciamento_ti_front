@@ -52,7 +52,6 @@ export default function Tabela(
         setShowModal(true);
     }
 
-    //TODO: no momento de salvar também é necessário adequar a forma como a API aceita os dados
     const handleSave = (objEditado) => {
         if(objEditado.id == null){
             Api.post(nomeController, objEditado).then(data => {

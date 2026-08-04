@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import InputVariavel from './inputVariavel';
 import Modal from "./modal.jsx";
 import ModalPesquisa from './modalPesquisa.jsx';
+import tipoInput from '../../enum/tipoInput.jsx';
 
 export default function ModalCadastro({ 
     show,
@@ -87,14 +88,9 @@ export default function ModalCadastro({
         key={campo.key}
         chave={campo.key}
         label={campo.label}
-        valor={
-            //todo: utilizar enumerator e checar o tipo do valor
-            campo.displayPath
-                ? getNestedValue(form, campo.displayPath)
-                : form[campo.key]
-        }
+        valor={form[campo.key]}
         tipo={campo.tipo}
-        handleChange={handleChange} //TODO: trocar função para receber o tipo do campo e renderizar o input correto
+        handleChange={handleChange}
         onClick={e=> 
           pesquisarObjetoRelacionado(
             campo.key, //identificador da caixa de texto que vai receber o valor visual
@@ -119,7 +115,7 @@ export default function ModalCadastro({
           </div>
         </div>
 
-        <div className="modal-footer" //todo: aceitar salvar com ENTER e pedir confirmação para salvar
+        <div className="modal-footer" //todo: pedir confirmação para salvar
         >
           <button className="btn btn-primary" onClick={handleSubmit}>Salvar</button>
           <button className="btn btn-secondary" onClick={onClose}>Cancelar</button>

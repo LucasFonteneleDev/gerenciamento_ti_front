@@ -50,7 +50,7 @@ export default function CardChamado({requisitante, texto, tempo, qtdNaoLida, onC
 
   return (
     <li onClick={onClick} class="pb-1 bg-body-tertiary">
-      <a href="#" className="text-decoration-none">
+      <div >
         <div className="list-group">
           <div className={selecionado ? "list-group-item bg-light" : "list-group-item "}>
             <div className="d-flex align-items-center ">
@@ -95,7 +95,7 @@ export default function CardChamado({requisitante, texto, tempo, qtdNaoLida, onC
             </div>
           </div>
         </div>
-      </a>
+      </div>
     </li>
   )
 }

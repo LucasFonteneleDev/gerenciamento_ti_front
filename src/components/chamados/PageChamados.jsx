@@ -66,7 +66,7 @@ export default function pageChamados() {
 
     return (
         <div>
-            <div className="container py-5">
+            <div className="py-5">
 
                 <div className="row">
                     <div className="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0"

@@ -18,7 +18,7 @@ function App() {
   return (
     <HashRouter>
 
-      <div className="container">
+      <div className="container-fluid">
         {usuarioLogado && <Navbar />}
         <Routes>
           <Route

@@ -4,6 +4,7 @@ import Modal from "./modal.jsx";
 import ModalPesquisa from './modalPesquisa.jsx';
 import tipoInput from '../../enum/tipoInput.jsx';
 
+
 export default function ModalCadastro({ 
     show,
     onClose,
@@ -38,6 +39,22 @@ export default function ModalCadastro({
   };
 
   const handleSubmit = () => {
+    //todo: concluir validação de senha
+    // const campoSenha = form.find(
+    //     campo => campo.tipo === tipoInput.SENHA
+    // );
+
+    alert(JSON.stringify(form));
+
+    // if (campoSenha) {
+    //     const senha = form[campoSenha.key];
+
+    //     if (!senha) {
+    //         alert("Informe a senha.");
+    //         return;
+    //     }
+    // }
+
     onSave(form);
   };
 

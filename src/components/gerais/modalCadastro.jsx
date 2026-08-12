@@ -44,7 +44,7 @@ export default function ModalCadastro({
     //     campo => campo.tipo === tipoInput.SENHA
     // );
 
-    alert(JSON.stringify(form));
+    // alert(JSON.stringify(form));
 
     // if (campoSenha) {
     //     const senha = form[campoSenha.key];
@@ -55,6 +55,27 @@ export default function ModalCadastro({
     //     }
     // }
 
+    //VALIDAÇÕES DO SUBMIT (TEMPORÁRIA)
+    const campos_vazios = schema_cadastro.filter(campo_schema => 
+      campo_schema.Obrigatorio && !form[campo_schema.key]
+    );
+
+    if(Array.isArray(campos_vazios) && campos_vazios.length > 0){
+      // if(campo_schema.Obrigatorio){
+      //   alert(`Campo "${campo_schema.label}" não pode ser vazio.`);
+      //   return;
+      // }
+
+      var campos_string = "";
+      campos_vazios.forEach(campo_schema => {
+        campos_string = campos_string + `${campo_schema.label}, `;
+      });
+
+      alert(`Campo(s) "${campos_string}" não pode(m) ser vazio(s).`);
+      return;
+    }
+
+    //todo: IMPORTAR PARA O MODAL CADASTRO A RESPONSABILIDADE DE CHAMAR A API
     onSave(form);
   };
 

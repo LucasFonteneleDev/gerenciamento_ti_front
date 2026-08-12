@@ -7,7 +7,7 @@ import tipoInput from "../enum/tipoInput"; "../enum/tipoInput.jsx"
 
 export const schema_cadastro = [
     { key: 'solucao', label: 'Solução' },
-    { key: 'inicio', label: 'Início', tipo: tipoInput.DATA},
+    { key: 'inicio', label: 'Início', tipo: tipoInput.DATA, Obrigatorio: true},
     { key: 'fim', label: 'Fim', tipo: tipoInput.DATA},
-    { key: 'assunto', label: 'Assunto'},
+    { key: 'assunto', label: 'Assunto', Obrigatorio: true},
   ];

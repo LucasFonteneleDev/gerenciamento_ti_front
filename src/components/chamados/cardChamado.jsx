@@ -1,4 +1,6 @@
-export default function CardChamado({requisitante, texto, tempo, qtdNaoLida, onClick, selecionado}) {
+import api from "../../services/api";
+
+export default function CardChamado({ chamado, qtdNaoLida, onClick, selecionado, onExcluir, onEditar }) {
 
   //todo: adicionar esta função a pasta de útil
   function formatarDataChat(dataString) {
@@ -58,8 +60,8 @@ export default function CardChamado({requisitante, texto, tempo, qtdNaoLida, onC
               {/* Avatar */}
               <div className="flex-shrink-0">
                 <img
-                  src={requisitante}
-                  alt={requisitante}
+                  src={chamado.requisitanteInicialNome}
+                  alt={chamado.requisitanteInicialNome}//todo: buscar uma melhor alternativa
                   className="rounded-circle"
                   width="50"
                   height="50"
@@ -70,19 +72,19 @@ export default function CardChamado({requisitante, texto, tempo, qtdNaoLida, onC
               <div className="flex-grow-1 ms-3 overflow-hidden">
                 <div className="d-flex justify-content-between">
                   <h6 className="mb-0 text-truncate">
-                    {requisitante}
+                    {chamado.requisitanteInicialNome}
                   </h6>
                 </div>
 
                 <p className="mb-0 text-muted text-truncate">
-                  {texto}
+                  {chamado.assunto}
                 </p>
               </div>
 
               {/* Hora + badge */}
               <div className="ms-3 text-end">
                 <small className="text-muted d-block">
-                  {formatarDataChat(tempo)}
+                  {formatarDataChat(chamado.inicio)}
                 </small>
 
                 {qtdNaoLida > 0 && (
@@ -92,6 +94,37 @@ export default function CardChamado({requisitante, texto, tempo, qtdNaoLida, onC
                 )}
               </div>
 
+              {/* Dropdown de opções */}
+              <div className="dropdown ms-2">
+                <button
+                  type="button"
+                  className="btn p-1 border-0 fs-4"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  ⋮
+                </button>
+
+                <ul className="dropdown-menu">
+                  <li>
+                    <button className="dropdown-item" onClick={() => onEditar(chamado.id)}>
+                      ✎ Editar
+                    </button>
+                  </li>
+
+                  <li>
+                    <button className="dropdown-item" onClick={() => {
+                      const confirma = confirm(`Deseja mesmo Excluir o chamado com o assunto: "${chamado.assunto}" ?`);
+
+                      if (confirma) {
+                        onExcluir(chamado.id)
+                      }
+                    }}>
+                      🗑 Excluir
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

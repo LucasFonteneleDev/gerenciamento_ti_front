@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import CardChamado from './cardChamado';
-import Api from '../../services/api';
+import api from '../../services/api';
 import ModalCadastro from '../gerais/modalCadastro';
 import { schema_cadastro } from '../../schemas/chamadoSchema';
 
@@ -21,7 +21,7 @@ export default function ListaCardChamados({ onSelectChamado }) {
   }, []);
 
   async function CarregaChamados() {
-    await Api.get("Chamado/listagem")
+    await api.get("Chamado/listagem")
       .then(data => setChamados(data));
   }
 
@@ -40,12 +40,12 @@ export default function ListaCardChamados({ onSelectChamado }) {
     const nomeController = "Chamado"
 
     if (objEditado.id == null) {
-      Api.post(nomeController, objEditado).then(data => {
+      api.post(nomeController, objEditado).then(data => {
         CarregaChamados();
       });
     }
     else {
-      Api.put(`${nomeController}/${objEditado.id}`, objEditado).then(data => {
+      api.put(`${nomeController}/${objEditado.id}`, objEditado).then(data => {
         CarregaChamados();
       });
     }
@@ -53,6 +53,18 @@ export default function ListaCardChamados({ onSelectChamado }) {
     setMostraModalChamado(false);
     // setObjSelecionado(null); //todo: preencher objeto selecionado
   };
+
+  async function excluir(id) {
+    await api.delete("Chamado/" + id);
+    CarregaChamados();
+  }
+
+  async function editar(id) {
+
+    // if(confirma){
+    //   await api.delete("Chamado/"+id);
+    // }
+  }
 
   return (
     <div className="card h-100">
@@ -84,17 +96,16 @@ export default function ListaCardChamados({ onSelectChamado }) {
 
             {filtrados.map((chamado) => (
               <CardChamado
+                chamado={chamado}
                 key={chamado.id}
-                requisitante={chamado.requisitanteInicialNome}
-                texto={chamado.assunto}
-                tempo={chamado.inicio}
-                naoLida={true}
                 qtdNaoLida={1}
                 onClick={() => {
                   SetChamado(chamado.id);
                 }}
-
                 selecionado={chamado.id == IdChamadoSelecionado}
+
+                onExcluir={excluir}
+                onEditar={editar}
               />
             ))}
 

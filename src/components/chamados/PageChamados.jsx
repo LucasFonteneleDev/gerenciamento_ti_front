@@ -16,12 +16,12 @@ export default function pageChamados() {
 
     useEffect(() => {
         if (IdChamadoSelecionado !== null) {
-            CarregaMensagensChamado(IdChamadoSelecionado);
+            CarregaMensagensChamado();
         }
     }, [IdChamadoSelecionado]);
 
-    async function CarregaMensagensChamado(idChamado) {
-        await Api.get("MensagemChamado/listagem/" + idChamado)
+    async function CarregaMensagensChamado() {
+        await Api.get("MensagemChamado/listagem/" + IdChamadoSelecionado)
             .then(data => setMensagens(data));
     }
 
@@ -45,21 +45,20 @@ export default function pageChamados() {
     }, [Mensagens]);
 
     //função ativada ao apertar um botão
-    function Enviar() {
+    async function Enviar() {
         //não enviar texto vazio
-        if (Texto === "" || Texto == null) {
+        if (Texto === "" || Texto == null || IdChamadoSelecionado == null) {
             return;
         }
 
-        setMensagens((mensagensAtuais) => ([
-            // ...mensagensAtuais,
-            // {
-            //     id_usuario: valorSelecionado,
-            //     recebendo: false,
-            //     data: "temp",
-            //     texto: Texto
-            // }
-        ]));
+        var mensagem = {
+            chamadoId: IdChamadoSelecionado,
+            texto: Texto
+        }
+
+        await Api.post("MensagemChamado", mensagem).then(data => {
+                        CarregaMensagensChamado();
+                    });
 
         setTexto("");
     }

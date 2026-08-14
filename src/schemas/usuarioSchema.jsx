@@ -8,5 +8,6 @@ export const schema_tabela = [
 export const schema_cadastro = [
     { key: 'nome', label: 'Nome' },
     { key: 'email', label: 'E-mail' },
-    { key: 'senha', label: 'Senha', tipo: tipoInput.SENHA}
+    { key: 'senha', label: 'Senha', tipo: tipoInput.SENHA},
+    { key: 'nivelAtendente', label: 'Nível de Atendente', tipo: tipoInput.DROPDOWN}
   ];

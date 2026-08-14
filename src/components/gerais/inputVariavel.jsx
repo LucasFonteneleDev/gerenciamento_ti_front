@@ -1,6 +1,7 @@
 import React from 'react'
 import tipoInput from '/src/enum/tipoInput';
 import Modal from './modal.jsx';
+import nivelAtendente from '../../enum/nivelAtendente.jsx';
 
 export default function InputVariavel({ chave, label, handleChange, valor, tipo, onClick }) {
 
@@ -79,6 +80,28 @@ export default function InputVariavel({ chave, label, handleChange, valor, tipo,
                         value={valor}
                         onChange={e => handleChange(chave, e.target.value)}
                     />
+                </div>
+            );
+        case tipoInput.DROPDOWN:
+            return (
+                <div className='m-2'>
+                    <label className="form-label">{label}</label>
+
+                    {/* tornar responsivo quanto ao schema */}
+                    <select
+                        className="form-select mt-1"
+                        value={valor}
+                        onChange={e => handleChange(chave, e.target.value)}
+                        aria-label="Default select example">
+                        {Object.values(nivelAtendente).map((nivel) => {
+                            return (
+                                <option key={nivel} value={nivel}>
+                                    {nivel}
+                                </option>
+                            );
+                        })}
+
+                    </select>
                 </div>
             );
         case tipoInput.TEXTO:

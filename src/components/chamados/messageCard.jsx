@@ -26,7 +26,7 @@ export default function MessageCard({ recebendo = true, texto, data, usuario, fo
         </div>
 
         <img src={foto}
-          alt="avatar"
+          alt={usuario}
           class="rounded-circle d-flex m-3 shadow-1-strong"
           width="60"
         />

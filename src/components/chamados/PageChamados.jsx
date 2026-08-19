@@ -57,8 +57,8 @@ export default function pageChamados() {
         }
 
         await Api.post("MensagemChamado", mensagem).then(data => {
-                        CarregaMensagensChamado();
-                    });
+            CarregaMensagensChamado();
+        });
 
         setTexto("");
     }
@@ -88,8 +88,9 @@ export default function pageChamados() {
                                                 //todo: na api definir via token quem está logado(??)
                                                 recebendo={true}
                                                 texto={mensagem.texto}
-                                            // usuario={Usuarios[mensagem.id_usuario].usuario}
-                                            // foto={Usuarios[mensagem.id_usuario].foto}
+                                                //todo: melhorar a visualização das mensagens
+                                                usuario={mensagem.usuarioChamadoId}
+                                                // foto={Usuarios[mensagem.id_usuario].foto}
                                             />
 
                                         </li>

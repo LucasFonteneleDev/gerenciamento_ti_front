@@ -4,11 +4,19 @@ import ListaCardChamados from './listaCardChamados'
 import TextAreaSend from './textAreaSend'
 import Api from '../../services/api';
 import { Await } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 
 export default function pageChamados() {
     const [IdChamadoSelecionado, setChamadoSelecionado] = useState(null);
     //lista de mensagens abertas atualmente.
     const [Mensagens, setMensagens] = useState()
+
+    const token = localStorage.getItem("token");
+    console.log("token requisitado")
+    let decoded = null;
+    if (token) {
+        decoded = jwtDecode(token);
+    }
 
     async function SelecionarChamado(idChamado) {
         await setChamadoSelecionado(idChamado);
@@ -86,11 +94,11 @@ export default function pageChamados() {
                                         <li className="d-flex mb-4">
                                             <MessageCard
                                                 //todo: na api definir via token quem está logado(??)
-                                                recebendo={true}
+                                                recebendo={mensagem.usuarioChamadoId != decoded.sub}
                                                 texto={mensagem.texto}
                                                 //todo: melhorar a visualização das mensagens
-                                                usuario={mensagem.usuarioChamadoId}
-                                                // foto={Usuarios[mensagem.id_usuario].foto}
+                                                usuarioNome={mensagem.usuarioChamadoNome}
+                                            // foto={Usuarios[mensagem.id_usuario].foto}
                                             />
 
                                         </li>

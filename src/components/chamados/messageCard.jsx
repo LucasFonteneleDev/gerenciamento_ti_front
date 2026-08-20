@@ -1,4 +1,4 @@
-export default function MessageCard({ recebendo = true, texto, data, usuario, foto }) {
+export default function MessageCard({ recebendo = true, texto, data, usuarioNome, foto }) {
   var classEspaco = recebendo ? ("d-flex mb-2 w-100 flex-row-reverse") :
     ("d-flex mb-2 w-100")
   var classMensagem = recebendo ? ("d-flex flex-row-reverse") :
@@ -12,7 +12,7 @@ export default function MessageCard({ recebendo = true, texto, data, usuario, fo
         <div class="card">
           <div class="card-header d-flex justify-content-between p-1">
             <p class="fw-bold mb-0">
-              {usuario}
+              {usuarioNome}
             </p>
             <p class="text-muted small mb-0">
               <i class="far fa-clock"></i> {data}
@@ -26,7 +26,7 @@ export default function MessageCard({ recebendo = true, texto, data, usuario, fo
         </div>
 
         <img src={foto}
-          alt={usuario}
+          alt={usuarioNome}
           class="rounded-circle d-flex m-3 shadow-1-strong"
           width="60"
         />

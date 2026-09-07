@@ -1,4 +1,4 @@
-# 💻 ControleChamadosTI — Frontend
+# 💻 GerenciamentoTI — Frontend
 
 Interface web do sistema de gerenciamento de **equipamentos, patrimônio e chamados de TI**.
 

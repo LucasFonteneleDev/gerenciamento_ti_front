@@ -56,7 +56,7 @@ Com isso, novos módulos podem aproveitar estruturas já existentes, mantendo um
 
 O frontend se comunica com uma **API REST** desenvolvida separadamente em C# / ASP.NET Core.
 
-👉 **[ControleChamadosTI — Backend](https://github.com/LucasFonteneleDev/gerenciamento-Ti)**
+👉 **[ControleChamadosTI — Backend](https://github.com/LucasFonteneleDev/GerenciamentoTi-Backend)**
 
 ```text
 ┌─────────────────────┐
